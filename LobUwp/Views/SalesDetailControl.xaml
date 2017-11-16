@@ -1,0 +1,54 @@
+﻿<UserControl
+    x:Class="LobUwp.Views.SalesDetailControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:grid="using:Telerik.UI.Xaml.Controls.Grid"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <Grid Name="block" Padding="0,15,0,0">
+        <Grid.Resources>
+            <Style x:Key="RightAlignField" TargetType="TextBlock">
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="Margin" Value="0,0,12,0" />
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock Margin="12,0,0,0"
+                    Text="{x:Bind MasterMenuItem.Company, Mode=OneWay}"
+                    Style="{StaticResource SubheaderTextBlockStyle}" />
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Margin="12,12,0,12">
+            <TextBlock Text="Order date:" Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,12,0"/>
+            <TextBlock Text="{x:Bind MasterMenuItem.OrderDate.ToShortDateString(), Mode=OneWay}"
+                           Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,12,0"/>
+
+            <TextBlock Text="Order total:" Style="{StaticResource BodyTextBlockStyle}" Margin="0,0,12,0"/>
+            <TextBlock Text="{x:Bind MasterMenuItem.OrderTotal, Mode=OneWay}"
+                           Style="{StaticResource BodyTextBlockStyle}" />
+        </StackPanel>
+        <grid:RadDataGrid ItemsSource="{x:Bind MasterMenuItem.OrderItems, Mode=OneWay}" Grid.Row="2" UserGroupMode="Disabled" Margin="12,0"
+                          UserFilterMode="Disabled" BorderBrush="Transparent" AutoGenerateColumns="False">
+            <grid:RadDataGrid.Columns>
+                <grid:DataGridTextColumn PropertyName="Description" />
+                <grid:DataGridNumericalColumn
+                    PropertyName="UnitPrice"  Header="Unit Price"
+                    CellContentStyle="{StaticResource RightAlignField}"/>
+                <grid:DataGridNumericalColumn
+                    PropertyName="Quantity"  Header="Quantity"
+                    CellContentStyle="{StaticResource RightAlignField}"/>
+                <grid:DataGridNumericalColumn
+                    PropertyName="TotalPrice"  Header="Total Price"
+                    CellContentStyle="{StaticResource RightAlignField}"/>
+            </grid:RadDataGrid.Columns>
+        </grid:RadDataGrid>
+    </Grid>
+
+</UserControl>
